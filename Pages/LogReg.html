@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../Styles/LoginStyle.css">
+    <title>Login and register</title>
+</head>
+<body>
+<h1> Login and register</h1>
+<p> Please select a page from the menu</p>
+
+<form id="choice">
+    <label for="choice">Login or Register:</label>
+    <button type="button" onclick="loginToggle()">Login</button>
+    <button type="button" onclick="registerToggle()">Register</button>
+</form>
+
+<form id="Login" class="hidden">
+    <h1>Login</h1>
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <button type="submit" onclick="login()">Login</button>
+</form>
+
+<form id="Register" class="hidden">
+    <h1>Register</h1>
+    <label for="username2">Username:</label>
+    <input type="text" id="username2" name="username2" required>
+    <label for="password2">Password:</label>
+    <input type="text" id="password2" name="password2" required>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="submit" onclick="register()">Register</button>
+</form>
+<a href="/">Home</a>
+
+<script>
+    async function loginToggle()
+    {
+        const loginForm = document.getElementById('Login');
+        loginForm.classList.toggle('hidden');
+    }
+
+    async function registerToggle()
+    {
+        const registerForm = document.getElementById('Register');
+        registerForm.classList.toggle('hidden');
+    }
+    async function register()
+    {
+        const username = document.getElementById('username2').value;
+        const password = document.getElementById('password2').value;
+        const email = document.getElementById('email').value;
+
+        const check = await fetch('/loginUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+        });
+
+        if (check.ok)
+        {
+            alert("Username already exists")
+            return;
+        }
+
+        await fetch('/registerUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password, email})
+        });
+
+        alert("User registered !!!")
+    }
+    async function login()
+    {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const check = await fetch('/loginUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+        });
+
+        if (!check.ok)
+        {
+            alert("Username or password incorrect")
+            return;
+        }
+
+        window.location.href = `/MainMenu`;
+    }
+</script>
+</body>
+</html>
