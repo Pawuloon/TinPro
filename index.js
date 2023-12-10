@@ -66,6 +66,21 @@ app.get('/MainMenu', async (req, res) =>{
 
 });
 
+app.get('/AdminMenu', async (req, res) =>
+{
+
+    try
+    {
+        const content =  await fs.readFile(__dirname + "\\pages\\AdminMenu.html", 'utf8');
+        res.send(content);
+    }
+    catch (e)
+    {
+        res.status(500).json({error: e});
+    }
+
+});
+
 app.get('/allUsers', async (req, res) =>
 {
     const data = await dbActions.getAllUsers();
@@ -77,10 +92,11 @@ app.get('/allUsers', async (req, res) =>
     res.json(data);
 });
 
+
 // Posts
 app.post('/loginUser', async (req, res) =>
 {
-    const result = dbActions.getUser(req.body.username, req.body.password);
+    const result = await dbActions.getUser(req.body.username, req.body.password);
     if (result === undefined)
     {
         res.status(500).json({error: "No such user"});
@@ -89,11 +105,21 @@ app.post('/loginUser', async (req, res) =>
     res.json(result);
 });
 
+app.post('/adminUsers', async (req, res) =>{
+    const data = await dbActions.checkAdmin(req.body.username, req.body.password);
+    if (data.length === 0)
+    {
+        res.status(500).json({error: "No data"});
+        return;
+    }
+    res.json(data);
+});
+
 app.post('/registerUser', async (req, res) =>
 {
     try
     {
-        const result = dbActions.addUser(req.body.username, req.body.password, req.body.email);
+        const result = await dbActions.addUser(req.body.username, req.body.password, req.body.email);
         if (result === false)
         {
             res.status(500).json({error: "Error while registering user"});
@@ -111,8 +137,10 @@ app.post('/registerUser', async (req, res) =>
 // Init
 initDb('.\\MyDb').then(() =>
 {
-    app.listen(port, () => {
+    app.listen(port, () =>
+    {
         console.log(`App listening at http://localhost:${port}`);
+
     });
     dbActions = new DbActions(db);
 });

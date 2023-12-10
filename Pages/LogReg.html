@@ -98,6 +98,21 @@
             return;
         }
 
+
+        const admin = await fetch('/adminUsers', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, password})
+        });
+
+
+        if (admin.ok)
+        {
+            window.location.href = `/AdminMenu`;
+            return;
+        }
         window.location.href = `/MainMenu`;
     }
 </script>

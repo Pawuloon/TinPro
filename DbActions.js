@@ -5,18 +5,24 @@ class DbActions
     {
         this.db = db;
     }
-    getAllUsers()
+    async getAllUsers()
     {
-        return this.db.all('SELECT * FROM APP_USER');
+        return this.db.all('SELECT * FROM APP_USER WHERE APP_USER.USER_PERMISSION != 3');
     }
 
-    getUser(name, password)
+    async checkAdmin(name, password)
+    {
+        const user = this.db.get('SELECT * FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=? AND USER_PERMISSION=3', name, password);
+        return user !== undefined;
+    }
+
+    async getUser(name, password)
     {
         const user = this.db.get('SELECT * FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=?', name, password);
         return user !== undefined ? user : false;
     }
 
-    addUser(name, password, email)
+     async addUser(name, password, email)
     {
         if (name.empty() || password.empty())
             throw new Error("Invalid user");

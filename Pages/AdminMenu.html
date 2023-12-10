@@ -7,20 +7,21 @@
 </head>
 <body>
 <h1>Admin Menu</h1>
-<table id="userDataList">
+<table>
     <tr>
         <th>Username</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Role</th>
+        <th>Possible actions</th>
     </tr>
-
+    <tbody id="userDataList"></tbody>
 
 </table>
 
 <script>
 
-    // Displays a table upon a button click with all the users and potential actions
+    // Displays a table of users and potential actions
     async function checkUsers()
     {
         const users = await fetch('/allUsers', {
@@ -80,7 +81,7 @@
         // TODO implement delete user function
     }
 
-
+    window.onload = checkUsers;
 </script>
 
 </body>
