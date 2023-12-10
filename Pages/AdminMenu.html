@@ -6,38 +6,82 @@
     <link rel="stylesheet" type="text/css" href="../Styles/MainMenu.css">
 </head>
 <body>
+<h1>Admin Menu</h1>
+<table id="userDataList">
+    <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Role</th>
+    </tr>
+
+
+</table>
+
 <script>
-    function checkUsers()
+
+    // Displays a table upon a button click with all the users and potential actions
+    async function checkUsers()
     {
-        // TODO implement
+        const users = await fetch('/allUsers', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        const data = await users.json();
+
+        const userList = document.getElementById('userDataList');
+        userList.innerHTML = '';
+
+        data.forEach(item =>
+        {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.USER_USERNAME}</td>
+                <td>${item.USER_PASSWORD}</td>
+                <td>${item.USER_EMAIL}</td>
+                <td>${item.USER_PERMISSION}</td>
+                <td><button type="button" onclick="deleteUser('${item.username}')">Delete</button></td>
+                <td><button type="button" onclick="grantPermissions('${item.username}')">Grant Permissions</button></td>
+            `;
+            userList.appendChild(row);
+        });
+
     }
 
     function checkGames()
     {
-        // TODO implement
+        // TODO implement check games function
     }
 
     function checkScores()
     {
-        // TODO implement
+        // TODO implement check scores function
     }
 
     function checkQuestions()
     {
-        // TODO implement
+        // TODO implement check questions function
     }
 
     function checkAnswers()
     {
-        // TODO implement
+        // TODO implement check answers function
     }
 
     function grantPermissions()
     {
-        // TODO implement
+        // TODO implement grant permissions function
+    }
+
+    function deleteUser()
+    {
+        // TODO implement delete user function
     }
 
 
 </script>
+
 </body>
 </html>

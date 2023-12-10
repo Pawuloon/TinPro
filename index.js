@@ -66,6 +66,17 @@ app.get('/MainMenu', async (req, res) =>{
 
 });
 
+app.get('/allUsers', async (req, res) =>
+{
+    const data = await dbActions.getAllUsers();
+    if (data.length === 0)
+    {
+        res.status(500).json({error: "No data"});
+        return;
+    }
+    res.json(data);
+});
+
 // Posts
 app.post('/loginUser', async (req, res) =>
 {
