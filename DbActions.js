@@ -7,28 +7,27 @@ class DbActions
     }
     async getAllUsers()
     {
-        return this.db.all('SELECT * FROM APP_USER WHERE APP_USER.USER_PERMISSION != 3');
+        return await this.db.all('SELECT * FROM APP_USER WHERE APP_USER.USER_PERMISSION != 3');
     }
 
     async checkAdmin(name, password)
     {
-        const user = this.db.get('SELECT * FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=? AND USER_PERMISSION=3', name, password);
-        return user !== undefined;
+        const perLvl = await this.db.all('SELECT USER_PERMISSION FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=?', name, password);
+        return perLvl !== null;
+    }
+    async checkUser(name, password)
+    {
+        const perLvl = await this.db.all('SELECT USER_PERMISSION FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=?', name, password);
+        return perLvl !== null;
     }
 
-    async getUser(name, password)
+    async addUser(name, password, email)
     {
-        const user = this.db.get('SELECT * FROM APP_USER WHERE USER_USERNAME=? AND USER_PASSWORD=?', name, password);
-        return user !== undefined ? user : false;
-    }
-
-     async addUser(name, password, email)
-    {
-        if (name.empty() || password.empty())
+        if (name.toString().length === 0 || password.toString().length === 0 || email.toString().length === 0)
             throw new Error("Invalid user");
         try
         {
-            this.db.run('INSERT INTO APP_USER (USER_USERNAME, USER_PASSWORD, USER_EMAIL) VALUES (?,?,?)', name, password, email);
+            await this.db.all('INSERT INTO APP_USER (USER_USERNAME, USER_PASSWORD, USER_EMAIL) VALUES (?,?,?)', name, password, email);
             return true;
         }
         catch (e)

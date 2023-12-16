@@ -10,7 +10,7 @@
 <h1> Login and register</h1>
 <p> Please select a page from the menu</p>
 
-<form id="choice">
+<form id="choice" >
     <label for="choice">Login or Register:</label>
     <button type="button" onclick="loginToggle()">Login</button>
     <button type="button" onclick="registerToggle()">Register</button>
@@ -63,7 +63,7 @@
             body: JSON.stringify({username, password})
         });
 
-        if (check.ok)
+        if (!check.ok)
         {
             alert("Username already exists")
             return;
@@ -84,36 +84,40 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        const check = await fetch('/loginUser', {
+
+        const checkUser = await fetch('/loginUser', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({username, password})
         });
 
-        if (!check.ok)
+
+        if (!checkUser.ok)
         {
             alert("Username or password incorrect")
-            return;
+            window.location.href = `/`;
         }
 
-
-        const admin = await fetch('/adminUsers', {
+        const checkAdmin = await fetch('/checkAdmin', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
             },
             body: JSON.stringify({username, password})
         });
 
-
-        if (admin.ok)
+        if (checkAdmin.ok)
         {
             window.location.href = `/AdminMenu`;
-            return;
         }
-        window.location.href = `/MainMenu`;
+        else
+        {
+           window.location.href = `/MainMenu`;
+        }
+
+
     }
 </script>
 </body>

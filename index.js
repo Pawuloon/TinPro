@@ -17,10 +17,6 @@ async function initDb(dbPath)
     });
 }
 
-
-
-
-
 app.use(exp.static(__dirname));
 app.use(bo.json());
 
@@ -44,6 +40,7 @@ app.get('/login', async (req, res) =>
     try
     {
         const content =  await fs.readFile(__dirname + "\\pages\\LogReg.html", 'utf8');
+
         res.send(content);
     }
     catch (e)
@@ -89,48 +86,51 @@ app.get('/allUsers', async (req, res) =>
         res.status(500).json({error: "No data"});
         return;
     }
-    res.json(data);
+    res.send(data);
 });
+
 
 
 // Posts
-app.post('/loginUser', async (req, res) =>
-{
-    const result = await dbActions.getUser(req.body.username, req.body.password);
-    if (result === undefined)
-    {
-        res.status(500).json({error: "No such user"});
-        return;
-    }
-    res.json(result);
-});
-
-app.post('/adminUsers', async (req, res) =>{
-    const data = await dbActions.checkAdmin(req.body.username, req.body.password);
-    if (data.length === 0)
-    {
-        res.status(500).json({error: "No data"});
-        return;
-    }
-    res.json(data);
-});
-
 app.post('/registerUser', async (req, res) =>
 {
     try
     {
-        const result = await dbActions.addUser(req.body.username, req.body.password, req.body.email);
+        const result = dbActions.addUser(req.body.username, req.body.password, req.body.email);
         if (result === false)
         {
             res.status(500).json({error: "Error while registering user"});
             return;
         }
-        res.json(result);
+        res.json("Registered");
     }
     catch (e)
     {
         res.status(500).json({error: e});
     }
+});
+
+
+app.post('/loginUser', async (req, res) =>
+{
+    const userResult = await dbActions.checkUser(req.body.username, req.body.password);
+    if (userResult === null)
+    {
+        res.status(500).json({error: "No such user"});
+        return;
+    }
+    res.send(userResult);
+});
+
+app.post('/checkAdmin', async (req, res) =>
+{
+    const result = await dbActions.checkAdmin(req.body.username, req.body.password);
+    if (result === null)
+    {
+        res.status(500).json({error: "No such user"});
+        return;
+    }
+    res.send(result);
 });
 
 
