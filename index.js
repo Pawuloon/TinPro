@@ -132,9 +132,9 @@ app.post('/checkAdmin', async (req, res) =>
     res.send(result);
 });
 
-app.post('grantPermission', async (req, res) =>
+app.post('/grantPermission', async (req, res) =>
 {
-    const result = await dbActions.grantPermission(req.body.username);
+    const result = await dbActions.grantPermission(req.body.username, req.body.permission);
     if (result === false)
     {
         res.status(500).json({error: "No such user"});

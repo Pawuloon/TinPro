@@ -18,7 +18,7 @@
     </tr>
     <tbody id="userDataList"></tbody>
 </table>
-
+<a href="/">Home</a>
 <script>
 
     // Displays a table of users and potential actions
@@ -49,9 +49,9 @@
                 <td>
                 <select id="permissionSet">
                     <option></option>
-                    <option value=3>ADMIN</option>
-                    <option value=2>MODERATOR</option>
-                    <option value=1>USER</option>
+                    <option value="3">ADMIN</option>
+                    <option value="2">MODERATOR</option>
+                    <option value="1">USER</option>
                 </select>
                 <button type="button" onclick="grantPermissions('${item.USER_USERNAME}')">Grant permission</button>
                 </td>
@@ -81,9 +81,17 @@
         // TODO implement check answers function
     }
 
-    async function grantPermissions(username, permission)
+    async function grantPermissions(username)
     {
-        const permissionGrant = await fetch('/grantPermissions', {
+        const permission = document.getElementById('permissionSet').value;
+
+        if (permission === "" || isNaN(permission))
+        {
+            alert("Please select a valid permission");
+            return;
+        }
+
+        const permissionGrant = await fetch('/grantPermission', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
