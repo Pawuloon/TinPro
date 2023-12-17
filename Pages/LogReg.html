@@ -10,7 +10,7 @@
 <h1> Login and register</h1>
 <p> Please select a page from the menu</p>
 
-<form id="choice" >
+<form id="choice">
     <label for="choice">Login or Register:</label>
     <button type="button" onclick="loginToggle()">Login</button>
     <button type="button" onclick="registerToggle()">Register</button>
@@ -84,7 +84,6 @@
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-
         const checkUser = await fetch('/loginUser', {
             method: 'POST',
             headers: {
@@ -108,7 +107,7 @@
             body: JSON.stringify({username, password})
         });
 
-        if (checkAdmin.ok)
+        if (checkAdmin.ok && checkUser.ok)
         {
             window.location.href = `/AdminMenu`;
         }
@@ -116,8 +115,6 @@
         {
            window.location.href = `/MainMenu`;
         }
-
-
     }
 </script>
 </body>

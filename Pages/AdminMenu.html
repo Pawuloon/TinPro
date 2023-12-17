@@ -13,10 +13,10 @@
         <th>First Name</th>
         <th>Last Name</th>
         <th>Role</th>
+        <th>Creation date</th>
         <th>Possible actions</th>
     </tr>
     <tbody id="userDataList"></tbody>
-
 </table>
 
 <script>
@@ -35,6 +35,7 @@
         const userList = document.getElementById('userDataList');
         userList.innerHTML = '';
 
+        // Grant permissions based on the drop box value
         data.forEach(item =>
         {
             const row = document.createElement('tr');
@@ -42,9 +43,18 @@
                 <td>${item.USER_USERNAME}</td>
                 <td>${item.USER_PASSWORD}</td>
                 <td>${item.USER_EMAIL}</td>
-                <td>${item.USER_PERMISSION}</td>
-                <td><button type="button" onclick="deleteUser('${item.username}')">Delete</button></td>
-                <td><button type="button" onclick="grantPermissions('${item.username}')">Grant Permissions</button></td>
+                <td>${item.ROLE_NAME}</td>
+                <td>${item.CREATED_DATE}</td>
+                <td><button type="button" onclick="deleteUser('${item.USER_USERNAME}', '${item.USER_EMAIL}')">Delete</button></td>
+                <td>
+                <select id="permissionSet">
+                    <option></option>
+                    <option value=3>ADMIN</option>
+                    <option value=2>MODERATOR</option>
+                    <option value=1>USER</option>
+                </select>
+                <button type="button" onclick="grantPermissions('${item.USER_USERNAME}')">Grant permission</button>
+                </td>
             `;
             userList.appendChild(row);
         });
@@ -71,14 +81,36 @@
         // TODO implement check answers function
     }
 
-    function grantPermissions()
+    async function grantPermissions(username, permission)
     {
-        // TODO implement grant permissions function
+        const permissionGrant = await fetch('/grantPermissions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, permission})
+        });
+
+        if (!permissionGrant.ok)
+            alert("User already has this permission");
+        else
+            alert("Permission granted !!!");
     }
 
-    function deleteUser()
+    async function deleteUser(username, email)
     {
-        // TODO implement delete user function
+        const userDelete = await fetch('/deleteUser', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username, email})
+        });
+
+        if (!userDelete.ok)
+            alert("User does not exist");
+        else
+            alert("User deleted !!!");
     }
 
     window.onload = checkUsers;

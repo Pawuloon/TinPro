@@ -40,7 +40,6 @@ app.get('/login', async (req, res) =>
     try
     {
         const content =  await fs.readFile(__dirname + "\\pages\\LogReg.html", 'utf8');
-
         res.send(content);
     }
     catch (e)
@@ -49,7 +48,8 @@ app.get('/login', async (req, res) =>
     }
 });
 
-app.get('/MainMenu', async (req, res) =>{
+app.get('/MainMenu', async (req, res) =>
+{
 
     try
     {
@@ -90,13 +90,12 @@ app.get('/allUsers', async (req, res) =>
 });
 
 
-
 // Posts
 app.post('/registerUser', async (req, res) =>
 {
     try
     {
-        const result = dbActions.addUser(req.body.username, req.body.password, req.body.email);
+        const result = await dbActions.addUser(req.body.username, req.body.password, req.body.email);
         if (result === false)
         {
             res.status(500).json({error: "Error while registering user"});
@@ -114,7 +113,7 @@ app.post('/registerUser', async (req, res) =>
 app.post('/loginUser', async (req, res) =>
 {
     const userResult = await dbActions.checkUser(req.body.username, req.body.password);
-    if (userResult === null)
+    if (userResult === false)
     {
         res.status(500).json({error: "No such user"});
         return;
@@ -125,7 +124,18 @@ app.post('/loginUser', async (req, res) =>
 app.post('/checkAdmin', async (req, res) =>
 {
     const result = await dbActions.checkAdmin(req.body.username, req.body.password);
-    if (result === null)
+    if (result === false)
+    {
+        res.status(500).json({error: "No such user/admin"});
+        return;
+    }
+    res.send(result);
+});
+
+app.post('grantPermission', async (req, res) =>
+{
+    const result = await dbActions.grantPermission(req.body.username);
+    if (result === false)
     {
         res.status(500).json({error: "No such user"});
         return;
@@ -133,6 +143,16 @@ app.post('/checkAdmin', async (req, res) =>
     res.send(result);
 });
 
+app.delete('/deleteUser', async (req, res) =>
+{
+    const result = await dbActions.deleteUser(req.body.username, req.body.email);
+    if (result === false)
+    {
+        res.status(500).json({error: "No such user"});
+        return;
+    }
+    res.send(result);
+});
 
 // Init
 initDb('.\\MyDb').then(() =>
