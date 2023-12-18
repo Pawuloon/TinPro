@@ -8,6 +8,57 @@
 <body>
 <h1>Main Menu</h1>
 <p>Please select a page from the menu</p>
+<button type="button" onclick="firstGame()">Game 1</button>
+<button type="button" onclick="secondGame()">Game 2</button>
+<button type="button" onclick="thirdGame()">Game 3</button>
+<button type="button" onclick="scoreBoard()">Score Board</button>
+<button type="button" onclick="userProfile()">User Profile</button>
+<button type="button" onclick="logout()">Logout</button>
+<button type="button" onclick="moderationPanel()">Moderation Panel</button>
 <a href="/">Home</a>
+<script>
+        // TODO implement the first game rubik's cube
+        function firstGame()
+        {
+            window.location.href = "/game1";
+        }
+
+        // TODO implement the second game flappy bird like
+        function secondGame()
+        {
+            window.location.href = "/game2";
+        }
+
+        // TODO implement the third game snake like
+        function thirdGame()
+        {
+            window.location.href = "/game3";
+        }
+
+        // TODO implement score board
+        function scoreBoard()
+        {
+            window.location.href = "/scoreBoard";
+        }
+
+        // TODO implement user profile which displays the user's score and other information
+        function userProfile()
+        {
+            window.location.href = "/userProfile";
+        }
+
+        // TODO implement logout you can also do it for admin
+        function logout()
+        {
+            window.location.href = "/logout";
+        }
+
+        // TODO implement some kind of moderation panel for moderators
+        function moderationPanel()
+        {
+            window.location.href = "/moderationPanel";
+        }
+
+</script>
 </body>
 </html>
