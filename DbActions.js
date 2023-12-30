@@ -1,4 +1,5 @@
 // Purpose: Database actions for the application
+const bc = require('bcrypt');
 class DbActions
 {
     constructor(db)
@@ -57,6 +58,33 @@ class DbActions
             return true;
         }
         catch(e)
+        {
+            return false;
+        }
+    }
+
+    // TODO Implement in the main menu
+    async updatePassword(name, password)
+    {
+        try
+        {
+            await this.db.all('UPDATE APP_USER SET USER_PASSWORD=? WHERE USER_USERNAME=?', password, name);
+            return true;
+        }
+        catch (e)
+        {
+            return false;
+        }
+    }
+
+    async insertSnakeScore(userId, score)
+    {
+        try
+        {
+            await this.db.all('INSERT INTO SNAKE_SCORES (USER_ID, SCORE) VALUES (?,?)', userId, score);
+            return true;
+        }
+        catch (e)
         {
             return false;
         }

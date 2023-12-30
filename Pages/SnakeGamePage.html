@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script src="../Games/SnakeGame.js"></script>
+</head>
+<body>
+<h1>Snake Game</h1>
+<p>If you want to be included in the scoreboard please include your username in the field bellow and click submit</p>
+<form action="/snake" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username">
+    <br>
+    <br>
+    <button type="button" value="Submit" onclick="saveScore()"> </button>
+</form>
+<a></a><a href="/">Home</a>
+<script>
+
+    // TODO Check if works
+    async function saveScore()
+    {
+        const username = document.getElementById('username').value;
+        const score = Snake.getScore;
+        const check = await fetch('/snake', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: username, score: score})
+        });
+    }
+</script>
+<canvas id="defaultCanvas0"></canvas>
+</body>
+</html>

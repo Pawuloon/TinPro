@@ -88,6 +88,18 @@ app.get('/allUsers', async (req, res) =>
     }
     res.send(data);
 });
+app.get('/snake', async (req, res) =>
+{
+    try
+    {
+        const content =  await fs.readFile(__dirname + "\\Pages\\SnakeGamePage.html", 'utf8');
+        res.send(content);
+    }
+    catch (e)
+    {
+        res.status(500).json({error: e});
+    }
+});
 
 
 // Posts
@@ -141,6 +153,18 @@ app.post('/grantPermission', async (req, res) =>
         return;
     }
     res.send(result);
+});
+
+app.post('/insertSnakeScore', async (req, res) =>
+{
+    const result = await dbActions.insertSnakeScore(req.body.username, req.body.score);
+    if (result === false)
+    {
+        res.status(500).json({error: "No such user"});
+        return;
+    }
+    res.send(result);
+
 });
 
 app.delete('/deleteUser', async (req, res) =>
