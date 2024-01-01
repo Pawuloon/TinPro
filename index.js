@@ -101,6 +101,19 @@ app.get('/snake', async (req, res) =>
     }
 });
 
+app.get('/flappy', async (req, res) =>
+{
+    try
+    {
+        const content =  await fs.readFile(__dirname + "\\Pages\\FlappyBirdPage.html", 'utf8');
+        res.send(content);
+    }
+    catch (e)
+    {
+        res.status(500).json({error: e});
+    }
+});
+
 
 // Posts
 app.post('/registerUser', async (req, res) =>

@@ -3,8 +3,8 @@
 let snake;
 let food;
 let gridSize = 20;
-let score = 0;
-let highScore = 0;
+let score
+let highScore
 
 function setup()
 {
@@ -12,6 +12,8 @@ function setup()
     frameRate(10);
     snake = new Snake();
     food = placeFood();
+    score = 0;
+    highScore = 0;
 }
 
 function draw()
@@ -19,7 +21,6 @@ function draw()
     background(220);
     snake.move();
     snake.checkCollision();
-    snake.update();
     snake.display();
 
     if (snake.eat(food))
