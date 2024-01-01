@@ -1,13 +1,18 @@
 let bird;
-let pipes = [];
-let gameOver = false;
-let score = 0;
+let pipes;
+let gameOver;
+let score;
+let highScore
 
 function setup()
 {
     createCanvas(400, 600);
+    pipes = [];
     bird = new Bird();
     pipes.push(new Pipe());
+    score = 0;
+    highScore = 0;
+    gameOver = false;
 }
 
 function draw()
@@ -29,20 +34,21 @@ function draw()
             pipes[i].update();
             pipes[i].show();
 
-            if (pipes[i].hits(bird)) {
+            if (pipes[i].hits(bird))
                 gameOver = true;
-            }
 
-            if (pipes[i].offscreen()) {
+
+            if (pipes[i].offscreen())
+            {
                 pipes.splice(i, 1);
                 score++;
+                if (score > highScore)
+                    highScore = score;
             }
         }
 
         if (bird.offscreen())
-        {
             gameOver = true;
-        }
 
         fill(0);
         textSize(32);
@@ -54,7 +60,7 @@ function draw()
         textSize(64);
         textAlign(CENTER, CENTER);
         text('Game Over', width / 2, height / 2);
-        text(`Score: ${score}`, width / 2, height / 2 + 60);
+        text(`Score: ${score} High Score: ${highScore}`, width / 2, height / 2 + 60);
     }
 }
 
@@ -64,9 +70,14 @@ function keyPressed()
     {
         bird.jump();
     }
+    else if (keyCode === 32 && gameOver)
+    {
+        setup();
+    }
 }
 
-class Bird {
+class Bird
+{
     constructor()
     {
         this.y = height / 2;
@@ -125,8 +136,10 @@ class Pipe {
 
     hits(bird)
     {
-        if (bird.y < this.top || bird.y > height - this.bottom) {
-            if (bird.x > this.x && bird.x < this.x + this.w) {
+        if (bird.y < this.top || bird.y > height - this.bottom)
+        {
+            if (bird.x > this.x && bird.x < this.x + this.w)
+            {
                 this.highlight = true;
                 return true;
             }
@@ -138,7 +151,8 @@ class Pipe {
     show()
     {
         fill(0, 255, 0);
-        if (this.highlight) {
+        if (this.highlight)
+        {
             fill(255, 0, 0);
         }
         rect(this.x, 0, this.w, this.top);
