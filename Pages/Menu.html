@@ -8,13 +8,15 @@
 <body>
 <h1>Main Menu</h1>
 <p>Please select a page from the menu</p>
-<button type="button" onclick="firstGame()">Snake</button>
-<button type="button" onclick="secondGame()">Flappy</button>
-<button type="button" onclick="thirdGame()">Rubik</button>
-<button type="button" onclick="scoreBoard()">Score Board</button>
-<button type="button" onclick="userProfile()">User Profile</button>
-<button type="button" onclick="logout()">Logout</button>
-<button type="button" onclick="moderationPanel()">Moderation Panel</button>
+<form>
+    <button type="button" onclick="firstGame()">Snake</button>
+    <button type="button" onclick="secondGame()">Flappy</button>
+    <button type="button" onclick="thirdGame()">Rubik</button>
+    <button type="button" onclick="scoreBoard()">Score Board</button>
+    <button type="button" onclick="userProfile()">User Profile</button>
+    <button type="button" onclick="logout()">Logout</button>
+    <button type="button" onclick="moderationPanel()">Moderation Panel</button>
+</form>
 <a href="/">Home</a>
 <script>
         // TODO implement the first game rubik's cube
@@ -23,10 +25,9 @@
             window.location.href = "/snake";
         }
 
-        // TODO implement the second game flappy bird like
         function secondGame()
         {
-            window.location.href = "/";
+            window.location.href = "/flappy";
         }
 
         function thirdGame()

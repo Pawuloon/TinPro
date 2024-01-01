@@ -1,5 +1,6 @@
 // Description: Snake game using js
 
+
 let snake;
 let food;
 let gridSize = 20;
@@ -9,7 +10,7 @@ let highScore
 function setup()
 {
     createCanvas(400, 400);
-    frameRate(10);
+    frameRate(12);
     snake = new Snake();
     food = placeFood();
     score = 0;
@@ -18,7 +19,7 @@ function setup()
 
 function draw()
 {
-    background(220);
+    background(170);
     snake.move();
     snake.checkCollision();
     snake.display();
@@ -55,7 +56,7 @@ function keyPressed()
     {
         snake.setDirection(1, 0);
     }
-    else
+    else if (keyCode === 32)
     {
         snake.restart();
     }
@@ -72,11 +73,10 @@ function displayScore()
 {
     fill(0);
     textSize(20);
-    text(`Score: ${score}  High Score ${highScore}`, 10, 30);
+    text(`Score : ${score}  High Score : ${highScore}`, 10, 30);
 }
 
-
-
+//subclass Snake
 class Snake
 {
     constructor()
@@ -129,7 +129,6 @@ class Snake
         }
     }
 
-
     display()
     {
         for (let i = 0; i < this.body.length; i++)
@@ -146,6 +145,8 @@ class Snake
         this.body[0] = createVector(Math.floor(width / 2), Math.floor(height / 2));
         this.xSpeed = 0;
         this.ySpeed = 0;
+        score = 0;
+        food = placeFood();
     }
 
     static get getScore()
