@@ -122,7 +122,8 @@ class Bird
     }
 }
 
-class Pipe {
+class Pipe
+{
     constructor()
     {
         this.spacing = 125;

@@ -101,6 +101,17 @@ app.get('/snake', async (req, res) =>
     }
 });
 
+
+app.get('/snakeScores', async (req, res) =>
+{
+    const data = await dbActions.getSnakeScores();
+    if (data.length === 0)
+    {
+        res.status(500).json({error: "No data"});
+        return;
+    }
+    res.send(data);
+});
 app.get('/flappy', async (req, res) =>
 {
     try
