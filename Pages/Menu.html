@@ -12,14 +12,11 @@
     <button type="button" onclick="firstGame()">Snake</button>
     <button type="button" onclick="secondGame()">Flappy</button>
     <button type="button" onclick="thirdGame()">Rubik</button>
-    <button type="button" onclick="scoreBoard()">Score Board</button>
-    <button type="button" onclick="userProfile()">User Profile</button>
-    <button type="button" onclick="logout()">Logout</button>
-    <button type="button" onclick="moderationPanel()">Moderation Panel</button>
 </form>
 <a href="/">Home</a>
+<a href="/instructions">Instructions</a>
 <script>
-        // TODO implement the first game rubik's cube
+
         function firstGame()
         {
             window.location.href = "/snake";
@@ -33,30 +30,6 @@
         function thirdGame()
         {
             window.location.href = "/rubik";
-        }
-
-        // TODO implement score board
-        function scoreBoard()
-        {
-            window.location.href = "/scoreBoard";
-        }
-
-        // TODO implement user profile which displays the user's score and other information
-        function userProfile()
-        {
-            window.location.href = "/userProfile";
-        }
-
-        // TODO implement logout you can also do it for admin
-        function logout()
-        {
-            window.location.href = "/logout";
-        }
-
-        // TODO implement some kind of moderation panel for moderators
-        function moderationPanel()
-        {
-            window.location.href = "/moderationPanel";
         }
 
 </script>

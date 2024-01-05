@@ -1,0 +1,4 @@
+It plays like a well known and loved snake, you use your arrows to collect the food and grow.
+But you must be careful not to hit the walls or eat your tail, or you will die.
+Simple as it gets.
+Use arrows to move the snake and use space if you want to restart the game.

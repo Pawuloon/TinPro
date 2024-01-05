@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Instructions</title>
+</head>
+<body>
+<h1>Instructions</h1>
+<button>Home</button>
+<button type="button" onclick="generalInfo()">General info instructions</button>
+<button type="button" onclick="flappyInfo()">Flappy Like Game</button>
+<button type="button" onclick="snakeInfo()">Snake Game</button>
+<div id="info"></div>
+</body>
+<script>
+    // Read info from the txt file and display it on the page
+    async function generalInfo()
+    {
+         const response = await fetch('/general');
+         const data = await response.text();
+         document.write(data);
+    }
+    async function flappyInfo()
+    {
+         const response = await fetch('/flappy');
+         const data = await response.text();
+         document.write(data);
+    }
+    async function snakeInfo()
+    {
+        const response = await fetch('/snake');
+        const data = await response.text();
+        document.write(data);
+    }
+
+</script>
+</html>

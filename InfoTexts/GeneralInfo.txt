@@ -1,0 +1,7 @@
+Currently, the program has one weird bug where you need to use debuger to run it.
+Mark some line in the code and press F9. Then press F8 to run the program.
+If you don't do this, the program will still work, but it will not let you through the login screen.
+First, you need to create a user. Then you can log in with that user.
+Remember your password as there is no possibility to change it.
+If you forget your password, you need to inform the admin where he will delete the user from the database.
+Then you can create a new user with the same username and a new password.

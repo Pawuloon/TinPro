@@ -1,0 +1,2 @@
+This one plays like flappy bird. So use space in order to avoid hitting the walls,
+you don't need to  worry about the floor though, it simply won't let you go through it or die :D

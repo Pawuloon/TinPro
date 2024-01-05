@@ -1,6 +1,4 @@
-// Description: Snake game using js
-
-
+// Description: Snake game
 let snake;
 let food;
 let gridSize = 20;
@@ -148,10 +146,4 @@ class Snake
         score = 0;
         food = placeFood();
     }
-
-    static get getScore()
-    {
-        return highScore;
-    }
 }
-module.exports = Snake;
