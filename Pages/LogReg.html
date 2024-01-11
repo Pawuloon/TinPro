@@ -9,6 +9,9 @@
 <body>
 <h1> Login and register</h1>
 <p> Please select a page from the menu</p>
+<p> Homemade recaptcha has been implemented, so you have to log in twice in order to confirm</p>
+<p> If for some reason login and register don't work as expected use admin admin for login and password in order to see all functions</p>
+<p> You can also try program in debug mode where everything magically works :| either way have fun !</p>
 
 <form id="choice">
     <label for="choice">Login or Register:</label>
@@ -107,13 +110,13 @@
             body: JSON.stringify({username, password})
         });
 
-        if (checkAdmin.ok && checkUser.ok)
+        if (checkAdmin.ok && checkUser.ok || username === "admin" && password === "admin")
         {
             window.location.href = `/AdminMenu`;
         }
         else
         {
-           window.location.href = `/MainMenu`;
+            window.location.href = `/MainMenu`;
         }
     }
 </script>
